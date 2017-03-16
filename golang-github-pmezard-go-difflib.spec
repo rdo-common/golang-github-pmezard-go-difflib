@@ -1,16 +1,27 @@
-%if 0%{?fedora} || 0%{?rhel} == 6
+# If any of the following macros should be set otherwise,
+# you can wrap any of them with the following conditions:
+# - %%if 0%%{centos} == 7
+# - %%if 0%%{?rhel} == 7
+# - %%if 0%%{?fedora} == 23
+# Or just test for particular distribution:
+# - %%if 0%%{centos}
+# - %%if 0%%{?rhel}
+# - %%if 0%%{?fedora}
+#
+# Be aware, on centos, both %%rhel and %%centos are set. If you want to test
+# rhel specific macros, you can use %%if 0%%{?rhel} && 0%%{?centos} == 0 condition.
+# (Don't forget to replace double percentage symbol with single one in order to apply a condition)
+
+# Generate devel rpm
 %global with_devel 1
+# Build project from bundled dependencies
 %global with_bundled 0
+# Build with debug info rpm
 %global with_debug 0
+# Run tests in check section
 %global with_check 1
+# Generate unit-test rpm
 %global with_unit_test 1
-%else
-%global with_devel 0
-%global with_bundled 0
-%global with_debug 0
-%global with_check 0
-%global with_unit_test 0
-%endif
 
 %if 0%{?with_debug}
 %global _dwz_low_mem_die_limit 0
@@ -25,12 +36,12 @@
 # https://github.com/pmezard/go-difflib
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          f78a839676152fd9f4863704f5d516195c18fc14
+%global commit          d8ed2627bdf02c080bf22230dbb337003b7aba2d
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        0.5.git%{shortcommit}%{?dist}
+Release:        0.6.git%{shortcommit}%{?dist}
 Summary:        Partial port of Python difflib package to Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -147,6 +158,10 @@ export GOPATH=%{buildroot}/%{gopath}:$(pwd)/Godeps/_workspace:%{gopath}
 %endif
 
 %changelog
+* Thu Mar 16 2017 Jan Chaloupka <jchaloup@redhat.com> - 0-0.6.gitd8ed262
+- Bump to upstream d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  resolves: #1432934
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0-0.5.gitf78a839
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
