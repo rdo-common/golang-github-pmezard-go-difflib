@@ -41,7 +41,7 @@
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        0.7.git%{shortcommit}%{?dist}
+Release:        0.8.git%{shortcommit}%{?dist}
 Summary:        Partial port of Python difflib package to Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -158,6 +158,9 @@ export GOPATH=%{buildroot}/%{gopath}:$(pwd)/Godeps/_workspace:%{gopath}
 %endif
 
 %changelog
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0-0.8.gitd8ed262
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0-0.7.gitd8ed262
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
